@@ -37,26 +37,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.buttonDel) {
-            dbHelper.deleteAll();
-        }
-        if (v.getId() == R.id.buttonAdd) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (v.getId() == R.id.buttonDel) {
+                    dbHelper.deleteAll();
+                }
+                if (v.getId() == R.id.buttonAdd) {
 //            String name = editName.getText().toString();
 //            String surname = editSurname.getText().toString();
 //            int year = Integer.parseInt(editYear.getText().toString());
 
-            Data data = new Data(editName.getText().toString(),
-                    editSurname.getText().toString(),
-                    Integer.parseInt(editYear.getText().toString()));
-            dbHelper.addEmployee(data);
-        }
-        if (v.getId() == R.id.buttonGet) {
-            LinkedList<Data> list = dbHelper.getAll();
+                    Data data = new Data(editName.getText().toString(),
+                            editSurname.getText().toString(),
+                            Integer.parseInt(editYear.getText().toString()));
+                    dbHelper.addEmployee(data);
+                }
+                if (v.getId() == R.id.buttonGet) {
+                    LinkedList<Data> list = dbHelper.getAll();
 
-            String text = "";
-            for (Data d : list) text = text + d.name + " " + d.surname + " " + d.year + "\n";
+                    String text = "";
+                    for (Data d : list) text = text + d.name + " " + d.surname + " " + d.year + "\n";
 
-            tvOut.setText(text);
-        }
+                    tvOut.setText(text);
+                }
+            }
+        }).start();
+
     }
 }
