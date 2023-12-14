@@ -12,6 +12,7 @@ import java.util.LinkedList;
 
 import io.github.tonnyl.whatsnew.WhatsNew;
 import io.github.tonnyl.whatsnew.item.WhatsNewItem;
+import io.github.tonnyl.whatsnew.util.PresentationOption;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,25 +35,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         butDel = findViewById(R.id.buttonDel);
         butAdd = findViewById(R.id.buttonAdd);
         butGet = findViewById(R.id.buttonGet);
+        butInf = findViewById(R.id.buttonInfo);
         butDel.setOnClickListener(this);
         butAdd.setOnClickListener(this);
         butGet.setOnClickListener(this);
-        butInf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WhatsNew.newInstance(
-                        new WhatsNewItem("Nice Icons", "Completely customize colors, texts and icons.", R.drawable.ic_launcher_background),
-                        new WhatsNewItem("Such Easy", "Setting this up only takes 2 lines of code, impressive you say?", R.drawable.ic_launcher_background),
-                        new WhatsNewItem("Very Sleep", "It helps you get more sleep by writing less code.", R.drawable.ic_launcher_background),
-                        new WhatsNewItem("Text Only", "No icons? Just go with plain text.", WhatsNewItem.NO_IMAGE_RES_ID)
-                ).presentAutomatically(MainActivity.this);
-            }
-        });
+        butInf.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.buttonInfo) {
+
+        WhatsNew whatsNew = WhatsNew.newInstance(
+                new WhatsNewItem("Database is works", "You can add lines into database, get info from database and delete all lines", WhatsNewItem.NO_IMAGE_RES_ID),
+                new WhatsNewItem("SQL runs in second thread", "", WhatsNewItem.NO_IMAGE_RES_ID),
+                new WhatsNewItem("Work in progress", "", WhatsNewItem.NO_IMAGE_RES_ID),
+                new WhatsNewItem("", "v1.2", WhatsNewItem.NO_IMAGE_RES_ID)
+        );
+        whatsNew.setPresentationOption(PresentationOption.DEBUG);
+        whatsNew.presentAutomatically(MainActivity.this);
+
+        }
 
         new Thread(new Runnable() {
             @Override
