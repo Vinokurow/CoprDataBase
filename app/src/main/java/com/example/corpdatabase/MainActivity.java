@@ -11,13 +11,14 @@ import android.widget.TextView;
 import java.util.LinkedList;
 
 import io.github.tonnyl.whatsnew.WhatsNew;
+import io.github.tonnyl.whatsnew.item.WhatsNewItem;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     DBHelper dbHelper;
     TextView tvOut;
     EditText editName, editSurname, editYear;
-    Button butDel, butAdd, butGet;
+    Button butDel, butAdd, butGet, butInf;
     String text;
 
     @Override
@@ -36,8 +37,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         butDel.setOnClickListener(this);
         butAdd.setOnClickListener(this);
         butGet.setOnClickListener(this);
-
-        WhatsNew news = new WhatsNew();
+        butInf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WhatsNew.newInstance(
+                        new WhatsNewItem("Nice Icons", "Completely customize colors, texts and icons.", R.drawable.ic_launcher_background),
+                        new WhatsNewItem("Such Easy", "Setting this up only takes 2 lines of code, impressive you say?", R.drawable.ic_launcher_background),
+                        new WhatsNewItem("Very Sleep", "It helps you get more sleep by writing less code.", R.drawable.ic_launcher_background),
+                        new WhatsNewItem("Text Only", "No icons? Just go with plain text.", WhatsNewItem.NO_IMAGE_RES_ID)
+                ).presentAutomatically(MainActivity.this);
+            }
+        });
 
     }
 
