@@ -43,9 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //слушатель для кнопок приложения
     @Override
     public void onClick(View v) {
 
+        //действия для кнопки APP INFO
         if (v.getId() == R.id.buttonInfo) {
 
         WhatsNew whatsNew = WhatsNew.newInstance(
@@ -58,14 +60,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         whatsNew.presentAutomatically(MainActivity.this);
 
         }
-
+        //работа с базой данных в отдельном потоке
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //действия для кнопки DELETE
                 if (v.getId() == R.id.buttonDel) {
                     dbHelper.deleteAll();
                     tvOut.setText(null);
                 }
+                //действия для кнопки ADD
                 if (v.getId() == R.id.buttonAdd) {
 //            String name = editName.getText().toString();
 //            String surname = editSurname.getText().toString();
@@ -76,12 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Integer.parseInt(editYear.getText().toString()));
                     dbHelper.addEmployee(data);
                 }
+                //действия для кнопки GET
                 if (v.getId() == R.id.buttonGet) {
                     LinkedList<Data> list = dbHelper.getAll();
 
                     text = "";
                     for (Data d : list) text = text + d.name + " " + d.surname + " " + d.year + "\n";
 
+                    //изменение textView происходит в основном потоке
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

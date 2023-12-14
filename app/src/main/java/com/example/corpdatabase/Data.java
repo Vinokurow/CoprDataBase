@@ -1,5 +1,6 @@
 package com.example.corpdatabase;
 
+//класс для передачи данных в sql-запрос
 public class Data {
 
     String name;

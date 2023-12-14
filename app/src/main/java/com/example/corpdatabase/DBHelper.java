@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.LinkedList;
-
+//класс для работы с базой данных
 public class DBHelper extends SQLiteOpenHelper {
     private static final String EMPLOYERS = "EMPLOYERS";
     private static final String COLUMN_NAME = "COLUMN_NAME";
@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, "employers.db", null, 1);
     }
 
+    //метод для создания таблицы
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
@@ -30,17 +31,20 @@ public class DBHelper extends SQLiteOpenHelper {
                         + COLUMN_YEAR + " INTEGER);");
     }
 
+    //метод для редактирования данных в таблице
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 
+    //метод для удаления записей из таблицы
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(EMPLOYERS, null, null);
         db.close();
     }
 
+    //метод для записи данных в таблицу
     public void addEmployee(Data data) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -53,6 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //метод для получения данных из таблицы
     public LinkedList<Data> getAll() {
         LinkedList<Data> list = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
