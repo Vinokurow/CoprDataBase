@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
+import io.github.tonnyl.whatsnew.WhatsNew;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     DBHelper dbHelper;
     TextView tvOut;
     EditText editName, editSurname, editYear;
     Button butDel, butAdd, butGet;
+    String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         butDel.setOnClickListener(this);
         butAdd.setOnClickListener(this);
         butGet.setOnClickListener(this);
+
+        WhatsNew news = new WhatsNew();
+
     }
 
     @Override
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 if (v.getId() == R.id.buttonDel) {
                     dbHelper.deleteAll();
+                    tvOut.setText(null);
                 }
                 if (v.getId() == R.id.buttonAdd) {
 //            String name = editName.getText().toString();
@@ -57,10 +64,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (v.getId() == R.id.buttonGet) {
                     LinkedList<Data> list = dbHelper.getAll();
 
-                    String text = "";
+                    text = "";
                     for (Data d : list) text = text + d.name + " " + d.surname + " " + d.year + "\n";
 
-                    tvOut.setText(text);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvOut.setText(text);
+                        }
+                    });
+
                 }
             }
         }).start();
