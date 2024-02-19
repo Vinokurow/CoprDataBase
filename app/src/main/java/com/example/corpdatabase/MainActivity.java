@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText editName, editSurname, editYear;
     Button butDel, butAdd, butGet, butInf;
     String text;
+    int a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
